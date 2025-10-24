@@ -1,0 +1,32 @@
+@model VetDashboardViewModel
+@{
+    ViewData["Title"] = "Кабінет ветеринара";
+}
+<section class="dashboard">
+    <h1>Розклад прийомів</h1>
+    <table class="pc-table">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Час</th>
+                <th>Пацієнт</th>
+                <th>Власник</th>
+                <th>Статус</th>
+                <th>Діагноз</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appointment in Model.Appointments)
+            {
+                <tr>
+                    <td>@appointment.Date.ToString("dd.MM.yyyy")</td>
+                    <td>@appointment.Time</td>
+                    <td>@appointment.Pet.Name</td>
+                    <td>@appointment.Pet.Owner.UserName</td>
+                    <td>@appointment.Status</td>
+                    <td>@appointment.Diagnosis ?? "—"</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>

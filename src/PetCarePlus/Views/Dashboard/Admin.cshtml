@@ -1,0 +1,30 @@
+@model AdminStatsViewModel
+@{
+    ViewData["Title"] = "Кабінет адміністратора";
+}
+<section class="dashboard">
+    <h1>Адмін-панель</h1>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <span class="stat-label">Користувачів</span>
+            <span class="stat-value">@Model.TotalUsers</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-label">Улюбленців</span>
+            <span class="stat-value">@Model.TotalPets</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-label">Майбутніх записів</span>
+            <span class="stat-value">@Model.UpcomingAppointments</span>
+        </div>
+    </div>
+    <section class="dashboard-card">
+        <h2>Список ветеринарів</h2>
+        <ul>
+            @foreach (var vet in Model.Vets)
+            {
+                <li>@vet.UserName — @vet.Email</li>
+            }
+        </ul>
+    </section>
+</section>

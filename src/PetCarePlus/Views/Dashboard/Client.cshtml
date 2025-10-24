@@ -1,0 +1,56 @@
+@model ClientDashboardViewModel
+@{
+    ViewData["Title"] = "Кабінет клієнта";
+}
+<section class="dashboard">
+    <h1>Привіт, @User.Identity?.Name!</h1>
+    <div class="dashboard-grid">
+        <article class="dashboard-card">
+            <h2>Мої улюбленці</h2>
+            <ul>
+                @foreach (var pet in Model.Pets)
+                {
+                    <li>
+                        <strong>@pet.Name</strong> — @pet.Species (@pet.Age років)
+                    </li>
+                }
+            </ul>
+        </article>
+        <article class="dashboard-card">
+            <h2>Заплановані візити</h2>
+            <ul>
+                @foreach (var appointment in Model.Appointments)
+                {
+                    <li>
+                        <strong>@appointment.Date.ToString("dd.MM.yyyy") о @appointment.Time</strong> — @appointment.Vet.UserName<br />
+                        Статус: @appointment.Status
+                    </li>
+                }
+            </ul>
+        </article>
+        <article class="dashboard-card">
+            <h2>Запис на прийом</h2>
+            <form method="post" action="/api/appointments" class="pc-form" data-api="json" data-api-mapping='{"petId":"PetId","vetId":"VetId","date":"Date","time":"Time"}'>
+                <label for="petId">Оберіть улюбленця</label>
+                <select id="petId" name="petId" required>
+                    @foreach (var pet in Model.Pets)
+                    {
+                        <option value="@pet.Id">@pet.Name</option>
+                    }
+                </select>
+                <label for="vetId">Ветеринар</label>
+                <select id="vetId" name="vetId" required>
+                    @foreach (var vet in Model.AvailableVets)
+                    {
+                        <option value="@vet.Id">@vet.UserName</option>
+                    }
+                </select>
+                <label for="date">Дата</label>
+                <input id="date" name="date" type="date" required />
+                <label for="time">Час</label>
+                <input id="time" name="time" type="time" required />
+                <button type="submit" class="btn-primary">Записатися</button>
+            </form>
+        </article>
+    </div>
+</section>
